@@ -2,7 +2,7 @@ resource "aws_key_pair" "eks" {
   key_name   = "eks"
   # you can paste the public key directly like this
   #public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6ONJth+DzeXbU3oGATxjVmoRjPepdl7sBuPzzQT2Nc sivak@BOOK-I6CR3LQ85Q"
-  public_key = file("~/.ssh/eks.pub")
+  public_key = file("~/.ssh/tools.pub")
   # ~ means windows home directory
 }
 
@@ -11,7 +11,7 @@ module "eks" {
   version = "~> 20.0"
   #cluster_service_ipv4_cidr = var.cluster_service_ipv4_cidr
   cluster_name    = "${var.project_name}-${var.environment}"
-  cluster_version = "1.30"
+  cluster_version = "1.33"
   # it should be false in PROD environments
   cluster_endpoint_public_access = true
 
@@ -41,19 +41,19 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    # blue = {
-    #   min_size      = 2
-    #   max_size      = 10
-    #   desired_size  = 2
-    #   capacity_type = "SPOT"
-    #   iam_role_additional_policies = {
-    #     AmazonEBSCSIDriverPolicy          = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
-    #     AmazonElasticFileSystemFullAccess = "arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess"
-    #     ElasticLoadBalancingFullAccess = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
-    #   }
-    #   # EKS takes AWS Linux 2 as it's OS to the nodes
-    #   key_name = aws_key_pair.eks.key_name
-    # }
+    blue = {
+      min_size      = 2
+      max_size      = 10
+      desired_size  = 2
+      capacity_type = "SPOT"
+      iam_role_additional_policies = {
+        AmazonEBSCSIDriverPolicy          = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+        AmazonElasticFileSystemFullAccess = "arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess"
+        ElasticLoadBalancingFullAccess = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
+      }
+      # EKS takes AWS Linux 2 as it's OS to the nodes
+      key_name = aws_key_pair.eks.key_name
+    }
     green = {
       min_size      = 2
       max_size      = 10

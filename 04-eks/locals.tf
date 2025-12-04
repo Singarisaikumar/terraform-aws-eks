@@ -1,4 +1,3 @@
-
 locals {
   private_subnet_ids = data.aws_ssm_parameter.private_subnet_ids.value
   cluster_sg_id      = data.aws_ssm_parameter.cluster_sg_id.value
