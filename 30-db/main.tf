@@ -4,15 +4,17 @@ module "db" {
 
   engine            = "mysql"
   engine_version    = "8.0"
-  instance_class    = "db.t3.micro"
+  instance_class    = "db.t4g.micro"
   allocated_storage = 5
+  storage_type = "gp2"
 
   db_name  = "transactions" #default schema for expense project
   username = "root"
   port     = "3306"
-
+  
+  
   vpc_security_group_ids = [data.aws_ssm_parameter.db_sg_id.value]  
-
+                  
   # DB subnet group
   db_subnet_group_name = data.aws_ssm_parameter.db_subnet_group_name.value
 
@@ -70,12 +72,12 @@ module "records" {
   version = "~> 2.0"
 
   zone_name = var.zone_name
-  
+
   records = [
     {
       name    = "db-${var.environment}"
       type    = "CNAME"
-      ttl = 1
+      ttl     = 1
       allow_overwrite = true
       records = [
         module.db.db_instance_address

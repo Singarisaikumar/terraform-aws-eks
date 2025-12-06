@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "devopswithaws.store"
-    key    = "terraform-aws-eks-ect"
+    key    = "terraform-aws-eks-ecr"
     region = "us-east-1"
     encrypt      = true
     use_lockfile = true 

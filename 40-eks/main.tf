@@ -11,9 +11,9 @@ module "eks" {
   version = "~> 20.0"
   #cluster_service_ipv4_cidr = var.cluster_service_ipv4_cidr
   cluster_name    = "${var.project_name}-${var.environment}"
-  cluster_version = "1.33"
+  cluster_version = "1.34"
   # it should be false in PROD environments
-  cluster_endpoint_public_access = true
+  cluster_endpoint_public_access = false
 
   vpc_id                   = local.vpc_id
   subnet_ids               = split(",", local.private_subnet_ids)
@@ -37,7 +37,7 @@ module "eks" {
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
-    instance_types = ["m6i.large", "m5.large", "m5n.large", "m5zn.large"]
+    instance_types = ["m5.large", "t3.small", "t3.medium", "c5.large"]
   }
 
   eks_managed_node_groups = {
