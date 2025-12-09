@@ -13,7 +13,7 @@ module "eks" {
   cluster_name    = "${var.project_name}-${var.environment}"
   cluster_version = "1.34"
   # it should be false in PROD environments
-  cluster_endpoint_public_access = false
+  cluster_endpoint_public_access = true
 
   vpc_id                   = local.vpc_id
   subnet_ids               = split(",", local.private_subnet_ids)
